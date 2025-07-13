@@ -1,0 +1,339 @@
+[
+{
+  "model": "products.category",
+  "pk": 1,
+  "fields": {
+    "name": "Ready to Eat",
+    "slug": "ready-to-eat",
+    "description": "Delicious pre-cooked Malaysian dishes ready to serve",
+    "created_at": "2025-07-12T14:43:58.072Z",
+    "updated_at": "2025-07-12T14:43:58.073Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 2,
+  "fields": {
+    "name": "Spice Paste",
+    "slug": "spice-paste",
+    "description": "Authentic Malaysian spice pastes for cooking",
+    "created_at": "2025-07-12T14:43:58.236Z",
+    "updated_at": "2025-07-12T14:43:58.236Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 3,
+  "fields": {
+    "name": "Spice Blend",
+    "slug": "spice-blend",
+    "description": "Traditional Malaysian spice blends and seasonings",
+    "created_at": "2025-07-12T14:43:58.398Z",
+    "updated_at": "2025-07-12T14:43:58.398Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 1,
+  "fields": {
+    "name": "Rendang Daging",
+    "category": 1,
+    "sku": "RTE-REN-001",
+    "slug": "rendang-daging",
+    "description": "Traditional Minangkabau slow-cooked beef in rich coconut curry. Tender beef chunks in aromatic spices.",
+    "price": "18.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:43:58.530Z",
+    "updated_at": "2025-07-12T14:43:58.530Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 2,
+  "fields": {
+    "name": "Curry Chicken",
+    "category": 1,
+    "sku": "RTE-CUR-001",
+    "slug": "curry-chicken",
+    "description": "Malaysian-style curry chicken with potatoes in coconut milk and spices.",
+    "price": "15.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:43:58.675Z",
+    "updated_at": "2025-07-12T14:43:58.675Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 3,
+  "fields": {
+    "name": "Beef Curry",
+    "category": 1,
+    "sku": "RTE-CUR-002",
+    "slug": "beef-curry",
+    "description": "Rich and flavorful beef curry with tender meat in aromatic curry sauce.",
+    "price": "19.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:43:58.887Z",
+    "updated_at": "2025-07-12T14:43:58.887Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 4,
+  "fields": {
+    "name": "Ayam Masak Merah",
+    "category": 1,
+    "sku": "RTE-AMM-001",
+    "slug": "ayam-masak-merah",
+    "description": "Chicken cooked in spicy tomato-based sauce with onions and chili.",
+    "price": "16.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:43:59.018Z",
+    "updated_at": "2025-07-12T14:43:59.018Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 5,
+  "fields": {
+    "name": "Sambal Udang",
+    "category": 1,
+    "sku": "RTE-SAM-001",
+    "slug": "sambal-udang",
+    "description": "Fresh prawns cooked in spicy sambal sauce with tamarind and chili.",
+    "price": "22.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:43:59.186Z",
+    "updated_at": "2025-07-12T14:43:59.186Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 6,
+  "fields": {
+    "name": "Rendang Paste",
+    "category": 2,
+    "sku": "SPA-REN-001",
+    "slug": "rendang-paste",
+    "description": "Authentic rendang spice paste made with galangal, lemongrass, chili, and traditional spices.",
+    "price": "8.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:43:59.306Z",
+    "updated_at": "2025-07-12T14:43:59.306Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 7,
+  "fields": {
+    "name": "Curry Paste",
+    "category": 2,
+    "sku": "SPA-CUR-001",
+    "slug": "curry-paste",
+    "description": "Traditional Malaysian curry paste with coconut, chili, and aromatic spices.",
+    "price": "7.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:43:59.511Z",
+    "updated_at": "2025-07-12T14:43:59.511Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 8,
+  "fields": {
+    "name": "Sambal Paste",
+    "category": 2,
+    "sku": "SPA-SAM-001",
+    "slug": "sambal-paste",
+    "description": "Fiery sambal paste made with fresh chilies, shallots, and belacan.",
+    "price": "6.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:43:59.694Z",
+    "updated_at": "2025-07-12T14:43:59.694Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 9,
+  "fields": {
+    "name": "Laksa Paste",
+    "category": 2,
+    "sku": "SPA-LAK-001",
+    "slug": "laksa-paste",
+    "description": "Aromatic laksa spice paste for authentic Malaysian laksa noodle soup.",
+    "price": "9.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:43:59.892Z",
+    "updated_at": "2025-07-12T14:43:59.892Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 10,
+  "fields": {
+    "name": "Tom Yam Paste",
+    "category": 2,
+    "sku": "SPA-TOM-001",
+    "slug": "tom-yam-paste",
+    "description": "Spicy and sour tom yam paste with lemongrass, galangal, and lime leaves.",
+    "price": "8.50",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:44:00.028Z",
+    "updated_at": "2025-07-12T14:44:00.028Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 11,
+  "fields": {
+    "name": "Rendang Spice Blend",
+    "category": 3,
+    "sku": "SPB-REN-001",
+    "slug": "rendang-spice-blend",
+    "description": "Dry spice blend for rendang with coriander, cumin, fennel, and other traditional spices.",
+    "price": "5.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:44:00.219Z",
+    "updated_at": "2025-07-12T14:44:00.219Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 12,
+  "fields": {
+    "name": "Curry Powder",
+    "category": 3,
+    "sku": "SPB-CUR-001",
+    "slug": "curry-powder",
+    "description": "Malaysian curry powder blend with turmeric, coriander, cumin, and chili.",
+    "price": "4.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:44:00.433Z",
+    "updated_at": "2025-07-12T14:44:00.433Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 13,
+  "fields": {
+    "name": "Fish Curry Powder",
+    "category": 3,
+    "sku": "SPB-FIS-001",
+    "slug": "fish-curry-powder",
+    "description": "Special spice blend for fish curry with fennel, coriander, and aromatic spices.",
+    "price": "5.50",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:44:00.624Z",
+    "updated_at": "2025-07-12T14:44:00.624Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 14,
+  "fields": {
+    "name": "Meat Curry Powder",
+    "category": 3,
+    "sku": "SPB-MEA-001",
+    "slug": "meat-curry-powder",
+    "description": "Robust spice blend for meat curry with star anise, cardamom, and traditional spices.",
+    "price": "6.50",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:44:00.812Z",
+    "updated_at": "2025-07-12T14:44:00.812Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 15,
+  "fields": {
+    "name": "Garam Masala",
+    "category": 3,
+    "sku": "SPB-GAR-001",
+    "slug": "garam-masala",
+    "description": "Traditional garam masala blend with cinnamon, cardamom, cloves, and black pepper.",
+    "price": "7.90",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:44:01.001Z",
+    "updated_at": "2025-07-12T14:44:01.002Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 16,
+  "fields": {
+    "name": "Biryani Spice Mix",
+    "category": 3,
+    "sku": "SPB-BIR-001",
+    "slug": "biryani-spice-mix",
+    "description": "Aromatic spice mix for biryani with saffron, bay leaves, and exotic spices.",
+    "price": "9.50",
+    "is_published": true,
+    "image_main": "",
+    "image_1": "",
+    "image_2": "",
+    "image_3": "",
+    "created_at": "2025-07-12T14:44:01.157Z",
+    "updated_at": "2025-07-12T14:44:01.157Z"
+  }
+}
+]

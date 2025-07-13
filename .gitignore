@@ -121,7 +121,6 @@ dmypy.json
 # Django specific
 media/
 staticfiles/
-static/
 .django_tailwind_cli/
 
 # Node.js
@@ -204,8 +203,14 @@ coverage.xml
 tailwindcss-*
 
 # Static files (will be collected)
-/static/
 /staticfiles/
+
+# Exclude generated CSS but allow other static files
+static/css/tailwind.css
+
+# Allow static assets we want to track
+!static/images/
+!static/manifest.json
 
 # Media files (user uploads)
 /media/
