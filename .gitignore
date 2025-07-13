@@ -1,0 +1,6 @@
+.env
+.envrc
+.django_tailwind_cli
+static/
+staticfiles
+media/

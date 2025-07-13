@@ -1,0 +1,15 @@
+{
+  "name": "Kampung Cuisine",
+  "short_name": "KC",
+  "description": "Authentic Malaysian cuisine ingredients and spices",
+  "theme_color": "#f97316",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/static/images/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
