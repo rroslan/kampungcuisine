@@ -182,6 +182,7 @@ Thumbs.db
 # Local development files
 local_settings.py
 .env.*
+!.env.example
 *.local
 
 # IDEs
