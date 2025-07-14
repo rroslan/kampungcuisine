@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantity Controls Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .quantity-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .quantity-btn:hover {
+            background: #0056b3;
+        }
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .test-section {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quantity Controls Test</h1>
+
+    <div class="test-section">
+        <h2>Test 1: Basic Quantity Control</h2>
+        <div class="quantity-control">
+            <button type="button" onclick="decreaseQuantity('quantity1')" class="quantity-btn">-</button>
+            <input type="number" id="quantity1" value="1" min="1" max="99" class="quantity-input">
+            <button type="button" onclick="increaseQuantity('quantity1')" class="quantity-btn">+</button>
+        </div>
+        <p>Current value: <span id="display1">1</span></p>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Another Quantity Control</h2>
+        <div class="quantity-control">
+            <button type="button" onclick="decreaseQuantity('quantity2')" class="quantity-btn">-</button>
+            <input type="number" id="quantity2" value="5" min="1" max="99" class="quantity-input">
+            <button type="button" onclick="increaseQuantity('quantity2')" class="quantity-btn">+</button>
+        </div>
+        <p>Current value: <span id="display2">5</span></p>
+    </div>
+
+    <div class="test-section">
+        <h2>Function Test Results</h2>
+        <div id="test-results"></div>
+        <button onclick="runTests()" class="quantity-btn">Run Tests</button>
+    </div>
+
+    <script>
+        // Utility functions for quantity controls (same as in cart.js)
+        function increaseQuantity(inputId) {
+            const input = document.getElementById(inputId);
+            if (input) {
+                const currentValue = parseInt(input.value) || 1;
+                if (currentValue < 99) {
+                    input.value = currentValue + 1;
+                    updateDisplay(inputId);
+                }
+            }
+        }
+
+        function decreaseQuantity(inputId) {
+            const input = document.getElementById(inputId);
+            if (input) {
+                const currentValue = parseInt(input.value) || 1;
+                if (currentValue > 1) {
+                    input.value = currentValue - 1;
+                    updateDisplay(inputId);
+                }
+            }
+        }
+
+        function updateDisplay(inputId) {
+            const input = document.getElementById(inputId);
+            const displayId = inputId.replace('quantity', 'display');
+            const display = document.getElementById(displayId);
+            if (input && display) {
+                display.textContent = input.value;
+            }
+        }
+
+        function runTests() {
+            const results = document.getElementById('test-results');
+            let testResults = [];
+
+            // Test 1: Check if functions exist
+            testResults.push(`✅ increaseQuantity function exists: ${typeof increaseQuantity === 'function'}`);
+            testResults.push(`✅ decreaseQuantity function exists: ${typeof decreaseQuantity === 'function'}`);
+
+            // Test 2: Test increasing quantity
+            const input1 = document.getElementById('quantity1');
+            const initialValue = parseInt(input1.value);
+            increaseQuantity('quantity1');
+            const afterIncrease = parseInt(input1.value);
+            testResults.push(`✅ Increase test: ${initialValue} → ${afterIncrease} (${afterIncrease === initialValue + 1 ? 'PASS' : 'FAIL'})`);
+
+            // Test 3: Test decreasing quantity
+            decreaseQuantity('quantity1');
+            const afterDecrease = parseInt(input1.value);
+            testResults.push(`✅ Decrease test: ${afterIncrease} → ${afterDecrease} (${afterDecrease === afterIncrease - 1 ? 'PASS' : 'FAIL'})`);
+
+            // Test 4: Test minimum limit
+            input1.value = 1;
+            decreaseQuantity('quantity1');
+            const afterMinTest = parseInt(input1.value);
+            testResults.push(`✅ Minimum limit test: Should stay at 1, got ${afterMinTest} (${afterMinTest === 1 ? 'PASS' : 'FAIL'})`);
+
+            // Test 5: Test maximum limit
+            input1.value = 99;
+            increaseQuantity('quantity1');
+            const afterMaxTest = parseInt(input1.value);
+            testResults.push(`✅ Maximum limit test: Should stay at 99, got ${afterMaxTest} (${afterMaxTest === 99 ? 'PASS' : 'FAIL'})`);
+
+            results.innerHTML = '<h3>Test Results:</h3><ul><li>' + testResults.join('</li><li>') + '</li></ul>';
+        }
+
+        // Initialize displays
+        updateDisplay('quantity1');
+        updateDisplay('quantity2');
+
+        // Add event listeners for manual input changes
+        document.getElementById('quantity1').addEventListener('input', () => updateDisplay('quantity1'));
+        document.getElementById('quantity2').addEventListener('input', () => updateDisplay('quantity2'));
+    </script>
+</body>
+</html>

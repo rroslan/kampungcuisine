@@ -4,6 +4,7 @@ These functions add global variables to template contexts.
 """
 
 from products.models import Category
+from cart.utils import get_cart_for_request
 
 
 def categories(request):
@@ -44,23 +45,20 @@ def site_info(request):
 def cart_info(request):
     """
     Add shopping cart information to the template context.
-    This would be used if you implement a shopping cart feature.
     """
-    # For now, return empty cart info
-    # You can implement actual cart logic later
+    cart = get_cart_for_request(request)
+
     cart_count = 0
     cart_total = 0.00
 
-    # If you have a cart session or model, you would calculate these values here
-    # Example:
-    # if 'cart' in request.session:
-    #     cart = request.session['cart']
-    #     cart_count = sum(item['quantity'] for item in cart.values())
-    #     cart_total = sum(item['price'] * item['quantity'] for item in cart.values())
+    if cart:
+        cart_count = cart.total_items
+        cart_total = float(cart.total_price)
 
     return {
         'cart_count': cart_count,
         'cart_total': cart_total,
+        'cart': cart,
     }
 
 
