@@ -112,25 +112,121 @@ Cuisine{% endblock %} {% block content %}
             </div>
             {% endif %}
 
-            <!-- Add to Cart Button -->
+            <!-- Add to Cart Section -->
             <div class="mb-8">
-                <button class="btn btn-primary btn-lg">
+                {% if product.is_published %}
+                <form
+                    hx-post="{% url 'cart:add_to_cart' product_id=product.id %}"
+                    hx-target="#cart-response"
+                    hx-swap="innerHTML"
+                    class="space-y-4"
+                >
+                    {% csrf_token %}
+                    <input
+                        type="hidden"
+                        name="next"
+                        value="{{ request.get_full_path }}"
+                    />
+
+                    <!-- Quantity Selector -->
+                    <div class="flex items-center space-x-4">
+                        <label class="text-sm font-medium text-gray-700"
+                            >How many?</label
+                        >
+                        <div
+                            class="flex items-center border border-gray-300 rounded-lg"
+                        >
+                            <button
+                                type="button"
+                                onclick="decreaseQuantity('quantity')"
+                                class="px-3 py-2 hover:bg-gray-100 transition-colors rounded-l-lg"
+                            >
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M20 12H4"
+                                    ></path>
+                                </svg>
+                            </button>
+                            <input
+                                type="number"
+                                name="quantity"
+                                id="quantity"
+                                value="1"
+                                min="1"
+                                max="99"
+                                class="w-16 py-2 text-center border-l border-r border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                            />
+                            <button
+                                type="button"
+                                onclick="increaseQuantity('quantity')"
+                                class="px-3 py-2 hover:bg-gray-100 transition-colors rounded-r-lg"
+                            >
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                    ></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Add to Cart Button -->
+                    <button type="submit" class="btn btn-primary btn-lg w-full">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                            />
+                        </svg>
+                        Add to Cart
+                    </button>
+                </form>
+
+                <!-- Response Container -->
+                <div id="cart-response" class="mt-4"></div>
+
+                {% else %}
+                <div class="alert alert-warning">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6 mr-2"
+                        class="stroke-current shrink-0 h-6 w-6"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke="currentColor"
                     >
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
                         />
                     </svg>
-                    Add to Cart
-                </button>
+                    <span>Sorry, this item is temporarily out of stock.</span>
+                </div>
+                {% endif %}
             </div>
 
             <!-- Product Meta -->
@@ -147,7 +243,7 @@ Cuisine{% endblock %} {% block content %}
     {% if related_products %}
     <div class="divider my-12"></div>
     <div>
-        <h2 class="text-2xl font-bold mb-6">Related Products</h2>
+        <h2 class="text-2xl font-bold mb-6">You might also like</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {% for related in related_products %}
             <div class="card bg-base-100 shadow-xl">
@@ -183,12 +279,39 @@ Cuisine{% endblock %} {% block content %}
                     <div class="text-xl font-bold text-primary">
                         ${{ related.price }}
                     </div>
-                    <div class="card-actions">
+                    <div class="card-actions justify-between">
+                        <form
+                            hx-post="{% url 'cart:add_to_cart' product_id=related.id %}"
+                            hx-target="#cart-response"
+                            hx-swap="innerHTML"
+                        >
+                            {% csrf_token %}
+                            <input type="hidden" name="quantity" value="1" />
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-sm"
+                            >
+                                <svg
+                                    class="w-4 h-4 mr-1"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17"
+                                    ></path>
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </form>
                         <a
                             href="{% url 'products:product_detail' related.slug %}"
-                            class="btn btn-primary btn-sm btn-block"
+                            class="btn btn-outline btn-sm"
                         >
-                            View Details
+                            Learn More
                         </a>
                     </div>
                 </div>
@@ -202,6 +325,52 @@ Cuisine{% endblock %} {% block content %}
 <script>
     function changeMainImage(imageUrl) {
         document.getElementById("mainImage").src = imageUrl;
+    }
+
+    // Handle HTMX responses for cart updates
+    document.body.addEventListener("htmx:afterRequest", function (event) {
+        if (
+            event.detail.xhr.responseType === "json" ||
+            event.detail.xhr
+                .getResponseHeader("content-type")
+                ?.includes("application/json")
+        ) {
+            try {
+                const response = JSON.parse(event.detail.xhr.responseText);
+                if (response.success && response.message) {
+                    // Show success message
+                    const responseContainer =
+                        document.getElementById("cart-response");
+                    responseContainer.innerHTML = `
+                        <div class="alert alert-success mt-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>✨ ${response.message}</span>
+                        </div>
+                    `;
+
+                    // Update cart count in navigation if it exists
+                    updateCartCount(response.cart_count);
+
+                    // Clear the message after 3 seconds
+                    setTimeout(() => {
+                        responseContainer.innerHTML = "";
+                    }, 3000);
+                }
+            } catch (e) {
+                // Not JSON response, ignore
+            }
+        }
+    });
+
+    function updateCartCount(count) {
+        const cartCountElements =
+            document.querySelectorAll("[data-cart-count]");
+        cartCountElements.forEach((element) => {
+            element.textContent = count;
+            element.style.display = count > 0 ? "inline" : "none";
+        });
     }
 </script>
 {% endblock %}

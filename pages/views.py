@@ -1,63 +1,8 @@
 from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
-from django.db.models import Q
 from django.contrib import messages
-from products.models import Product, Category
 from .forms import ContactForm
 
 # Create your views here.
-
-
-def index(request):
-    """Render the home page with product listings"""
-    products = Product.objects.filter(is_published=True).select_related('category')
-
-    # Search functionality
-    query = request.GET.get('q')
-    if query:
-        products = products.filter(
-            Q(name__icontains=query) |
-            Q(description__icontains=query) |
-            Q(sku__icontains=query)
-        )
-
-    # Category filtering
-    category_slug = request.GET.get('category')
-    if category_slug:
-        products = products.filter(category__slug=category_slug)
-
-    # Sorting
-    sort = request.GET.get('sort', '-created_at')
-    if sort in ['name', '-name', 'price', '-price', 'created_at', '-created_at']:
-        products = products.order_by(sort)
-
-    # Pagination
-    paginator = Paginator(products, 4)  # Show 4 products per page
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    # Get all categories for filter sidebar
-    categories = Category.objects.all()
-
-    context = {
-        'page_obj': page_obj,
-        'products': page_obj,
-        'categories': categories,
-        'current_category': category_slug,
-        'query': query,
-        'sort': sort,
-    }
-
-    # Check if this is an HTMX request
-    if request.headers.get('HX-Request'):
-        # Return only the product grid partial for HTMX requests
-        return render(request, 'products/partials/product_grid.html', context)
-
-    # Check if this is a request for category menu
-    if request.headers.get('HX-Request') and request.headers.get('HX-Target') in ['category-menu', 'desktop-category-menu']:
-        return render(request, 'products/partials/category_menu.html', {'categories': categories})
-
-    return render(request, 'pages/index.html', context)
 
 
 def about_us(request):

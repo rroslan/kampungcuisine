@@ -2,7 +2,7 @@
 <li>
     <a
         href="?category={{ category.slug }}"
-        hx-get="{% url 'pages:index' %}?category={{ category.slug }}"
+        hx-get="{% url 'products:product_list' %}?category={{ category.slug }}"
         hx-target="#products-grid"
         hx-swap="innerHTML"
         hx-indicator="#loading-indicator"

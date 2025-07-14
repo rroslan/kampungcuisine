@@ -45,17 +45,68 @@
                 <div class="text-2xl font-bold text-primary">
                     ${{ product.price }}
                 </div>
-                <button
-                    class="btn btn-primary btn-sm"
-                    hx-get="{% url 'products:product_detail' product.slug %}"
-                    hx-target="#modal-content"
-                    hx-swap="innerHTML"
-                    hx-trigger="click"
-                    onclick="product_modal.showModal()"
-                >
-                    Quick View
-                </button>
+                <div class="flex space-x-2">
+                    {% if product.is_published %}
+                    <form
+                        hx-post="{% url 'cart:add_to_cart' product_id=product.id %}"
+                        hx-target="#cart-response-{{ product.id }}"
+                        hx-swap="innerHTML"
+                    >
+                        {% csrf_token %}
+                        <input type="hidden" name="quantity" value="1" />
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-sm"
+                            title="Add to Cart"
+                        >
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17"
+                                />
+                            </svg>
+                        </button>
+                    </form>
+                    {% endif %}
+                    <button
+                        class="btn btn-outline btn-sm"
+                        hx-get="{% url 'products:product_detail' product.slug %}"
+                        hx-target="#modal-content"
+                        hx-swap="innerHTML"
+                        hx-trigger="click"
+                        onclick="product_modal.showModal()"
+                    >
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            ></path>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
+            <!-- Cart Response Container -->
+            <div id="cart-response-{{ product.id }}" class="mt-2"></div>
         </div>
     </div>
     {% empty %}
@@ -79,7 +130,7 @@
                 {% if query or current_category %}
                 <div class="text-xs">Try adjusting your search or filters</div>
                 <a
-                    href="{% url 'pages:index' %}"
+                    href="{% url 'products:product_list' %}"
                     class="btn btn-sm btn-ghost mt-2"
                     >View all products</a
                 >
@@ -102,25 +153,23 @@
             hx-target="#products-grid"
             hx-swap="innerHTML"
             hx-indicator="#loading-indicator"
-        >«</a>
-        {% endif %}
-
-        {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-            <button class="btn btn-primary">{{ num }}</button>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-            <a
-                href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
-                class="btn"
-                hx-get="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
-                hx-target="#products-grid"
-                hx-swap="innerHTML"
-                hx-indicator="#loading-indicator"
-            >{{ num }}</a>
-            {% endif %}
-        {% endfor %}
-
-        {% if page_obj.has_next %}
+            >«</a
+        >
+        {% endif %} {% for num in page_obj.paginator.page_range %} {% if
+        page_obj.number == num %}
+        <button class="btn btn-primary">{{ num }}</button>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'
+        %}
+        <a
+            href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
+            class="btn"
+            hx-get="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
+            hx-target="#products-grid"
+            hx-swap="innerHTML"
+            hx-indicator="#loading-indicator"
+            >{{ num }}</a
+        >
+        {% endif %} {% endfor %} {% if page_obj.has_next %}
         <a
             href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
             class="btn"
@@ -128,7 +177,8 @@
             hx-target="#products-grid"
             hx-swap="innerHTML"
             hx-indicator="#loading-indicator"
-        >»</a>
+            >»</a
+        >
         {% endif %}
     </div>
 </div>

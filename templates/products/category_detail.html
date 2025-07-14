@@ -8,7 +8,7 @@
     <div class="mb-8">
         <nav class="text-sm breadcrumbs mb-4">
             <ul>
-                <li><a href="{% url 'pages:index' %}">Home</a></li>
+                <li><a href="{% url 'products:product_list' %}">Home</a></li>
                 <li>
                     <a href="{% url 'products:product_list' %}">Products</a>
                 </li>
@@ -81,10 +81,7 @@
                 <div class="text-xs">
                     This category doesn't have any products yet.
                 </div>
-                <a
-                    href="{% url 'products:product_list' %}"
-                    class="btn btn-sm btn-ghost mt-2"
-                >View all products</a>
+                <a href="{% url 'products:product_list' %}" class="btn btn-sm btn-ghost mt-2">View all products</a>
             </div>
         </div>
         {% endfor %}
