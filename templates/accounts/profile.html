@@ -45,26 +45,14 @@
                                 </div>
                             </div>
 
-                            <div>
-                                <label class="block text-sm font-medium text-base-content mb-1">Phone Number</label>
-                                <p class="text-base-content bg-base-200 px-3 py-2 rounded-md">
-                                    {{ profile.phone_number|default:"Not provided"
-                                    }}
-                                </p>
-                            </div>
+
 
                             <div>
                                 <label class="block text-sm font-medium text-base-content mb-1">Address</label>
                                 <p class="text-base-content bg-base-200 px-3 py-2 rounded-md">{{ profile.address|default:"Not provided" }}</p>
                             </div>
 
-                            <div>
-                                <label class="block text-sm font-medium text-base-content mb-1">Date of Birth</label>
-                                <p class="text-base-content bg-base-200 px-3 py-2 rounded-md">
-                                    {{ profile.date_of_birth|date:"F d,
-                                    Y"|default:"Not provided" }}
-                                </p>
-                            </div>
+
 
                             <div>
                                 <label class="block text-sm font-medium text-base-content mb-1">Member Since</label>

@@ -52,7 +52,7 @@ def check_user_profiles():
             print(f"  - {user.username}")
             print(f"    Email: {user.email}")
             print(f"    Profile ID: {profile.id}")
-            print(f"    Phone: {profile.phone_number or 'Not set'}")
+            print(f"    Address: {profile.address or 'Not set'}")
             print(f"    Created: {profile.created_at.strftime('%Y-%m-%d %H:%M')}")
             print()
         return True

@@ -65,9 +65,8 @@ def checkout_view(request):
             'customer_email': request.user.email,
         }
 
-        # Try to get phone from user profile
+        # Try to get address from user profile
         if hasattr(request.user, 'userprofile'):
-            initial_data['customer_phone'] = request.user.userprofile.phone_number
             initial_data['delivery_address'] = request.user.userprofile.address
 
         form = CheckoutForm(initial=initial_data)
