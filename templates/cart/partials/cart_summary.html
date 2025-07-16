@@ -1,34 +1,38 @@
 {% load static %}
 
-<div class="bg-white rounded-lg shadow-sm border border-gray-200 sticky top-4">
+<!-- Cart summary container with dark theme -->
+<div
+    class="bg-base-100 rounded-lg shadow-sm border border-base-300 sticky top-4"
+>
     <div class="p-6">
-        <h2 class="text-xl font-semibold mb-4">Your Order</h2>
+        <h2 class="text-xl font-semibold mb-4 text-base-content">Your Order</h2>
 
+        <!-- Check if cart has items -->
         {% if cart and not cart.is_empty %}
         <!-- Cart Summary Details -->
         <div class="space-y-3 mb-6">
             <div class="flex justify-between text-sm">
-                <span class="text-gray-600"
+                <span class="text-base-content/70"
                     >{{ cart.total_items }} item{{ cart.total_items|pluralize
                     }}</span
                 >
-                <span class="text-gray-900">${{ cart.total_price }}</span>
+                <span class="text-base-content">${{ cart.total_price }}</span>
             </div>
 
             <div class="flex justify-between text-sm">
-                <span class="text-gray-600">Delivery</span>
+                <span class="text-base-content/70">Delivery</span>
                 <span class="text-green-600 font-medium">Free!</span>
             </div>
 
             <div class="flex justify-between text-sm">
-                <span class="text-gray-600">Tax</span>
-                <span class="text-gray-900">Included</span>
+                <span class="text-base-content/70">Tax</span>
+                <span class="text-base-content">Included</span>
             </div>
 
-            <hr class="border-gray-200" />
+            <hr class="border-base-300" />
 
             <div class="flex justify-between text-lg font-semibold">
-                <span>Total</span>
+                <span class="text-base-content">Total</span>
                 <span class="text-primary">${{ cart.total_price }}</span>
             </div>
         </div>
@@ -55,14 +59,14 @@
                 Complete Your Order
             </a>
 
-            <p class="text-xs text-gray-500 text-center">
+            <p class="text-xs text-base-content/60 text-center">
                 🔒 Safe & secure checkout
             </p>
         </div>
 
         <!-- Additional Info -->
-        <div class="mt-6 pt-6 border-t border-gray-200">
-            <div class="space-y-3 text-sm text-gray-600">
+        <div class="mt-6 pt-6 border-t border-base-300">
+            <div class="space-y-3 text-sm text-base-content/70">
                 <div class="flex items-center">
                     <svg
                         class="w-4 h-4 mr-2 text-green-500"
@@ -118,7 +122,7 @@
         <!-- Empty Cart Summary -->
         <div class="text-center py-8">
             <svg
-                class="w-12 h-12 mx-auto text-gray-300 mb-4"
+                class="w-12 h-12 mx-auto text-base-content/30 mb-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -130,7 +134,9 @@
                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                 ></path>
             </svg>
-            <p class="text-gray-500 mb-4">Start adding delicious items!</p>
+            <p class="text-base-content/60 mb-4">
+                Start adding delicious items!
+            </p>
             <a
                 href="{% url 'products:product_list' %}"
                 class="btn btn-primary btn-sm"
@@ -139,5 +145,6 @@
             </a>
         </div>
         {% endif %}
+        <!-- End cart conditional -->
     </div>
 </div>

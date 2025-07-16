@@ -1,65 +1,76 @@
 {% load static %}
 
+<!-- Check if cart has items -->
 {% if cart_items %}
     <div class="space-y-4">
+        <!-- Loop through cart items -->
         {% for item in cart_items %}
-            <div class="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:shadow-sm transition-shadow">
+            <div class="flex items-center space-x-4 p-4 border border-base-300 rounded-lg hover:shadow-sm transition-shadow">
                 <!-- Product Image -->
                 <div class="flex-shrink-0">
                     <a href="{% url 'products:product_detail' slug=item.product.slug %}">
+                        <!-- Check if product has main image -->
                         {% if item.product.image_main %}
                             <img src="{{ item.product.image_main.url }}"
                                  alt="{{ item.product.name }}"
                                  class="w-20 h-20 object-cover rounded-lg">
                         {% else %}
-                            <div class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center">
-                                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <!-- Fallback for no image -->
+                            <div class="w-20 h-20 bg-base-300 rounded-lg flex items-center justify-center">
+                                <svg class="w-8 h-8 text-base-content/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                 </svg>
                             </div>
                         {% endif %}
+                        <!-- End image conditional -->
                     </a>
                 </div>
 
                 <!-- Product Details -->
                 <div class="flex-grow">
-                    <h3 class="font-semibold text-gray-900">
+                    <h3 class="font-semibold text-base-content">
                         <a href="{% url 'products:product_detail' slug=item.product.slug %}"
                            class="hover:text-primary transition-colors">
                             {{ item.product.name }}
                         </a>
                     </h3>
-                    <p class="text-sm text-gray-600">SKU: {{ item.product.sku }}</p>
+                    <p class="text-sm text-base-content/70">SKU: {{ item.product.sku }}</p>
+                    <!-- Check if product has category -->
                     {% if item.product.category %}
-                        <p class="text-sm text-gray-500">{{ item.product.category.name }}</p>
+                        <p class="text-sm text-base-content/60">{{ item.product.category.name }}</p>
                     {% endif %}
+                    <!-- End category conditional -->
                     <p class="text-lg font-semibold text-primary mt-1">${{ item.product.price }}</p>
                 </div>
 
                 <!-- Quantity Controls -->
                 <div class="flex items-center space-x-2">
-                    <div class="flex items-center border border-gray-300 rounded-lg">
+                    <div class="flex items-center border border-base-300 rounded-lg">
                         <form hx-post="{% url 'cart:update_cart_item' item_id=item.id %}"
                               hx-target="#cart-items"
                               hx-swap="outerHTML">
                             {% csrf_token %}
                             <input type="hidden" name="quantity" value="{{ item.quantity|add:'-1' }}">
                             <button type="submit"
-                                    class="px-3 py-1 hover:bg-gray-100 transition-colors rounded-l-lg"
+                                    class="px-3 py-1 hover:bg-base-200 transition-colors rounded-l-lg"
+                                    <!-- Check if quantity is 1 or less -->
                                     {% if item.quantity <= 1 %}title="Remove from cart"{% endif %}>
+                                <!-- Show remove icon if quantity is 1 -->
                                 {% if item.quantity <= 1 %}
                                     <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                     </svg>
                                 {% else %}
+                                <!-- Show minus icon if quantity is more than 1 -->
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                                     </svg>
                                 {% endif %}
+                                <!-- End quantity icon conditional -->
                             </button>
                         </form>
 
-                        <span class="px-4 py-1 bg-gray-50 border-l border-r border-gray-300 min-w-[3rem] text-center">
+                        <span class="px-4 py-1 bg-base-200 border-l border-r border-base-300 min-w-[3rem] text-center text-base-content">
                             {{ item.quantity }}
                         </span>
 
@@ -69,7 +80,7 @@
                             {% csrf_token %}
                             <input type="hidden" name="quantity" value="{{ item.quantity|add:'1' }}">
                             <button type="submit"
-                                    class="px-3 py-1 hover:bg-gray-100 transition-colors rounded-r-lg">
+                                    class="px-3 py-1 hover:bg-base-200 transition-colors rounded-r-lg">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                 </svg>
@@ -80,7 +91,7 @@
 
                 <!-- Item Total -->
                 <div class="text-right">
-                    <p class="text-lg font-semibold text-gray-900">${{ item.total_price }}</p>
+                    <p class="text-lg font-semibold text-base-content">${{ item.total_price }}</p>
                     <form hx-post="{% url 'cart:remove_from_cart' item_id=item.id %}"
                           hx-target="#cart-items"
                           hx-swap="outerHTML"
@@ -94,12 +105,15 @@
                 </div>
             </div>
         {% endfor %}
+        <!-- End cart items loop -->
     </div>
 {% else %}
+<!-- Empty cart state -->
     <div class="text-center py-8">
-        <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-16 h-16 mx-auto text-base-content/30 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M9 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm10 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
         </svg>
-        <p class="text-gray-500">Your cart is empty</p>
+        <p class="text-base-content/60">Your cart is empty</p>
     </div>
 {% endif %}
+<!-- End cart items conditional -->

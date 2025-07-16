@@ -1,23 +1,38 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Register - {{ block.super }}{% endblock %}
-
-{% block content %}
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
+{% extends 'base.html' %} {% load static %} {% block title %}Register - {{
+block.super }}{% endblock %} {% block content %}
+<div
+    class="min-h-screen flex items-center justify-center bg-base-200 py-12 px-4 sm:px-6 lg:px-8"
+>
+    <div class="max-w-md w-full space-y-8 bg-base-100 p-8 rounded-lg shadow-xl">
         <div>
-            <div class="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-primary text-white">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            <div
+                class="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-primary text-white"
+            >
+                <svg
+                    class="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                    />
                 </svg>
             </div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            <h2
+                class="mt-6 text-center text-3xl font-extrabold text-base-content"
+            >
                 Create your account
             </h2>
-            <p class="mt-2 text-center text-sm text-gray-600">
+            <p class="mt-2 text-center text-sm text-base-content/70">
                 Or
-                <a href="{% url 'accounts:login' %}" class="font-medium text-primary hover:text-primary-focus">
+                <a
+                    href="{% url 'accounts:login' %}"
+                    class="font-medium text-primary hover:text-primary-focus"
+                >
                     sign in to your existing account
                 </a>
             </p>
@@ -26,84 +41,133 @@
         <form class="mt-8 space-y-6" method="post">
             {% csrf_token %}
 
+            <!-- Error handling block -->
             {% if form.errors %}
-                <div class="alert alert-error">
-                    <svg class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <div>
-                        {% for field, errors in form.errors.items %}
-                            {% for error in errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
+            <div class="alert alert-error">
+                <svg
+                    class="stroke-current shrink-0 h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                </svg>
+                <div>
+                    <!-- Loop through form errors -->
+                    {% for field, errors in form.errors.items %}
+                    <!-- Loop through individual errors -->
+                    {% for error in errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                    <!-- End error loop -->
+                    {% endfor %}
+                    <!-- End field loop -->
                 </div>
+            </div>
             {% endif %}
+            <!-- End error handling -->
 
             <div class="space-y-4">
                 <div>
-                    <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                    <label
+                        for="{{ form.username.id_for_label }}"
+                        class="block text-sm font-medium text-base-content"
+                    >
                         Username
                     </label>
                     <div class="mt-1">
                         {{ form.username }}
+                        <!-- Username error handling -->
                         {% if form.username.errors %}
-                            <div class="text-red-500 text-sm mt-1">
-                                {% for error in form.username.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
-                            </div>
+                        <div class="text-red-500 text-sm mt-1">
+                            <!-- Loop through username errors -->
+                            {% for error in form.username.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                            <!-- End username error loop -->
+                        </div>
                         {% endif %}
+                        <!-- End username error handling -->
                     </div>
                 </div>
 
                 <div>
-                    <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                    <label
+                        for="{{ form.password1.id_for_label }}"
+                        class="block text-sm font-medium text-base-content"
+                    >
                         Password
                     </label>
                     <div class="mt-1">
                         {{ form.password1 }}
+                        <!-- Password1 error handling -->
                         {% if form.password1.errors %}
-                            <div class="text-red-500 text-sm mt-1">
-                                {% for error in form.password1.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
-                            </div>
+                        <div class="text-red-500 text-sm mt-1">
+                            <!-- Loop through password1 errors -->
+                            {% for error in form.password1.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                            <!-- End password1 error loop -->
+                        </div>
                         {% endif %}
+                        <!-- End password1 error handling -->
                     </div>
                 </div>
 
                 <div>
-                    <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                    <label
+                        for="{{ form.password2.id_for_label }}"
+                        class="block text-sm font-medium text-base-content"
+                    >
                         Confirm Password
                     </label>
                     <div class="mt-1">
                         {{ form.password2 }}
+                        <!-- Password2 error handling -->
                         {% if form.password2.errors %}
-                            <div class="text-red-500 text-sm mt-1">
-                                {% for error in form.password2.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
-                            </div>
+                        <div class="text-red-500 text-sm mt-1">
+                            <!-- Loop through password2 errors -->
+                            {% for error in form.password2.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                            <!-- End password2 error loop -->
+                        </div>
                         {% endif %}
+                        <!-- End password2 error handling -->
                     </div>
                 </div>
             </div>
 
             <div>
                 <button type="submit" class="btn btn-primary btn-block">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    <svg
+                        class="w-5 h-5 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                        />
                     </svg>
                     Create Account
                 </button>
             </div>
 
             <div class="text-center">
-                <p class="text-sm text-gray-600">
+                <p class="text-sm text-base-content/70">
                     Already have an account?
-                    <a href="{% url 'accounts:login' %}" class="font-medium text-primary hover:text-primary-focus">
+                    <a
+                        href="{% url 'accounts:login' %}"
+                        class="font-medium text-primary hover:text-primary-focus"
+                    >
                         Sign in here
                     </a>
                 </p>
@@ -114,11 +178,15 @@
 
 <style>
     /* Custom styling for form fields */
-    #id_username, #id_password1, #id_password2 {
+    #id_username,
+    #id_password1,
+    #id_password2 {
         @apply input input-bordered w-full;
     }
 
-    #id_username:focus, #id_password1:focus, #id_password2:focus {
+    #id_username:focus,
+    #id_password1:focus,
+    #id_password2:focus {
         @apply input-primary;
     }
 </style>

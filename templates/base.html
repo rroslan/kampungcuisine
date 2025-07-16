@@ -1,11 +1,6 @@
 {% load tailwind_cli %} {% load django_htmx %}
 <!doctype html>
-<html
-    lang="en"
-    x-data="themeManager()"
-    :data-theme="currentTheme"
-    x-init="initTheme()"
->
+<html lang="en" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -57,25 +52,6 @@
                 position: relative !important;
             }
 
-            /* Theme selector styling */
-            .theme-selector {
-                transition: all 0.2s ease;
-            }
-
-            .theme-selector:hover {
-                transform: scale(1.1);
-            }
-
-            .theme-selector svg {
-                transition:
-                    opacity 0.2s ease,
-                    transform 0.2s ease;
-            }
-
-            .theme-selector:active {
-                transform: scale(0.95);
-            }
-
             /* Dark theme optimization */
             [data-theme="dark"] .bg-gradient-to-r {
                 background-image: linear-gradient(to right, #f97316, #dc2626);
@@ -110,6 +86,52 @@
                 box-shadow:
                     0 4px 6px -1px rgba(0, 0, 0, 0.3),
                     0 2px 4px -1px rgba(0, 0, 0, 0.15);
+            }
+
+            /* Mobile navigation optimizations */
+            @media (max-width: 1023px) {
+                .navbar {
+                    padding: 0.5rem 1rem;
+                }
+
+                .navbar-start .btn {
+                    padding: 0.5rem;
+                }
+
+                .navbar-end {
+                    gap: 0.25rem;
+                }
+
+                .navbar-end .btn {
+                    padding: 0.5rem;
+                    min-height: 2.5rem;
+                    height: 2.5rem;
+                }
+
+                .navbar-end .btn-sm {
+                    padding: 0.25rem 0.5rem;
+                    min-height: 2rem;
+                    height: 2rem;
+                    font-size: 0.75rem;
+                }
+
+                .dropdown-content {
+                    width: 14rem !important;
+                    max-width: calc(100vw - 2rem) !important;
+                }
+
+                /* Improve cart dropdown positioning on mobile */
+                .dropdown-end .dropdown-content {
+                    right: 0;
+                    left: auto;
+                }
+
+                /* Improve cart badge visibility on mobile */
+                .indicator-item {
+                    font-size: 0.75rem;
+                    padding: 0.125rem 0.25rem;
+                    min-height: 1rem;
+                }
             }
         </style>
         {% block extra_css %}{% endblock %}
@@ -150,7 +172,7 @@
                         <li><a href="/admin/">Admin</a></li>
                     </ul>
                 </div>
-                <a href="/" class="btn btn-ghost normal-case text-xl"
+                <a href="/" class="btn btn-ghost normal-case text-lg lg:text-xl"
                     >🍜 Kampung Cuisine</a
                 >
             </div>
@@ -163,7 +185,7 @@
                 </ul>
             </div>
 
-            <div class="navbar-end">
+            <div class="navbar-end gap-1">
                 <!-- Shopping Cart with Badge -->
                 <div class="dropdown dropdown-end">
                     <label tabindex="0" class="btn btn-ghost btn-circle">
@@ -192,7 +214,7 @@
                     </label>
                     <div
                         tabindex="0"
-                        class="mt-3 z-[9999] card card-compact dropdown-content w-64 bg-base-100 shadow-xl"
+                        class="mt-3 z-[9999] card card-compact dropdown-content w-64 lg:w-64 bg-base-100 shadow-xl"
                     >
                         <div class="card-body">
                             <span class="font-bold text-lg">
@@ -258,139 +280,19 @@
                 {% else %}
                 <a
                     href="{% url 'accounts:login' %}"
-                    class="btn btn-ghost btn-sm mr-2"
+                    class="btn btn-ghost btn-sm hidden sm:inline-flex"
                     >Login</a
                 >
                 <a
                     href="{% url 'accounts:register' %}"
-                    class="btn btn-primary btn-sm mr-2"
+                    class="btn btn-primary btn-sm"
                     >Sign Up</a
                 >
                 {% endif %}
-
-                <!-- Admin-Style Theme Selector -->
-                <button
-                    @click="cycleTheme()"
-                    class="theme-selector btn btn-ghost btn-circle mr-2"
-                    :title="getThemeTitle()"
-                >
-                    <!-- Light Theme Icon -->
-                    <svg
-                        x-show="currentTheme === 'light'"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.464 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                            clip-rule="evenodd"
-                        />
-                    </svg>
-
-                    <!-- Dark Theme Icon -->
-                    <svg
-                        x-show="currentTheme === 'dark'"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                    >
-                        <path
-                            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-                        />
-                    </svg>
-
-                    <!-- System/Auto Theme Icon -->
-                    <svg
-                        x-show="currentTheme === 'auto'"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                    </svg>
-                </button>
             </div>
         </div>
 
         {% block content %} {% endblock %}
-
-        <!-- Theme Management Script -->
-        <script>
-            function themeManager() {
-                return {
-                    currentTheme: localStorage.getItem("theme") || "auto",
-
-                    initTheme() {
-                        this.setTheme(this.currentTheme);
-                    },
-
-                    setTheme(theme) {
-                        this.currentTheme = theme;
-
-                        if (theme === "auto") {
-                            // Use system preference
-                            const systemTheme = window.matchMedia(
-                                "(prefers-color-scheme: dark)",
-                            ).matches
-                                ? "dark"
-                                : "light";
-                            document.documentElement.setAttribute(
-                                "data-theme",
-                                systemTheme,
-                            );
-                        } else {
-                            document.documentElement.setAttribute(
-                                "data-theme",
-                                theme,
-                            );
-                        }
-
-                        localStorage.setItem("theme", theme);
-                    },
-
-                    cycleTheme() {
-                        const themes = ["light", "dark", "auto"];
-                        const currentIndex = themes.indexOf(this.currentTheme);
-                        const nextIndex = (currentIndex + 1) % themes.length;
-                        this.setTheme(themes[nextIndex]);
-                    },
-
-                    getThemeTitle() {
-                        const titles = {
-                            light: "Light Mode (click to switch to Dark)",
-                            dark: "Dark Mode (click to switch to Auto)",
-                            auto: "Auto Mode (click to switch to Light)",
-                        };
-                        return (
-                            titles[this.currentTheme] || "Click to change theme"
-                        );
-                    },
-                };
-            }
-
-            // Listen for system theme changes when auto is selected
-            window
-                .matchMedia("(prefers-color-scheme: dark)")
-                .addEventListener("change", (e) => {
-                    const currentTheme = localStorage.getItem("theme");
-                    if (currentTheme === "auto") {
-                        document.documentElement.setAttribute(
-                            "data-theme",
-                            e.matches ? "dark" : "light",
-                        );
-                    }
-                });
-        </script>
 
         <!-- Cart Management JavaScript -->
         <script src="{% static 'js/cart.js' %}"></script>
