@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Order Confirmation - {{ order.order_number }}</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f4f4f4;
+            }
+            .container {
+                background-color: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .header {
+                text-align: center;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+                border-bottom: 2px solid #e74c3c;
+            }
+            .logo {
+                font-size: 28px;
+                font-weight: bold;
+                color: #e74c3c;
+                margin-bottom: 10px;
+            }
+            .order-number {
+                background-color: #e74c3c;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                display: inline-block;
+                font-weight: bold;
+                margin: 20px 0;
+            }
+            .section {
+                margin-bottom: 25px;
+            }
+            .section h3 {
+                color: #e74c3c;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 10px;
+                margin-bottom: 15px;
+            }
+            .order-items {
+                background-color: #f9f9f9;
+                padding: 15px;
+                border-radius: 5px;
+            }
+            .item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 0;
+                border-bottom: 1px solid #eee;
+            }
+            .item:last-child {
+                border-bottom: none;
+            }
+            .item-name {
+                font-weight: bold;
+            }
+            .item-details {
+                color: #666;
+                font-size: 14px;
+            }
+            .item-price {
+                font-weight: bold;
+                color: #e74c3c;
+            }
+            .total-section {
+                background-color: #e74c3c;
+                color: white;
+                padding: 15px;
+                border-radius: 5px;
+                text-align: center;
+            }
+            .total-amount {
+                font-size: 24px;
+                font-weight: bold;
+            }
+            .customer-info {
+                background-color: #f9f9f9;
+                padding: 15px;
+                border-radius: 5px;
+            }
+            .info-row {
+                margin-bottom: 10px;
+            }
+            .info-label {
+                font-weight: bold;
+                color: #555;
+                margin-right: 10px;
+            }
+            .status-badge {
+                background-color: #f39c12;
+                color: white;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 14px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid #ddd;
+                color: #666;
+                font-size: 14px;
+            }
+            .contact-info {
+                background-color: #ecf0f1;
+                padding: 15px;
+                border-radius: 5px;
+                margin-top: 20px;
+            }
+            @media only screen and (max-width: 600px) {
+                body {
+                    padding: 10px;
+                }
+                .container {
+                    padding: 20px;
+                }
+                .item {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                .item-price {
+                    margin-top: 5px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="logo">🍜 Kampung Cuisine</div>
+                <h1>Order Confirmation</h1>
+                <div class="order-number">Order #{{ order.order_number }}</div>
+            </div>
+
+            <div class="section">
+                <p>Dear {{ order.customer_name }},</p>
+                <p>
+                    Thank you for your order! We've received your request and
+                    are preparing your delicious meal. Here are the details of
+                    your order:
+                </p>
+            </div>
+
+            <div class="section">
+                <h3>📦 Order Details</h3>
+                <div class="customer-info">
+                    <div class="info-row">
+                        <span class="info-label">Order Date:</span>
+                        {{ order.created_at|date:"F d, Y \a\t g:i A" }}
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Status:</span>
+                        <span class="status-badge"
+                            >{{ order.get_status_display }}</span
+                        >
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Customer:</span>
+                        {{ order.customer_name }}
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Email:</span>
+                        {{ order.customer_email }}
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Phone:</span>
+                        {{ order.customer_phone }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🚚 Delivery Information</h3>
+                <div class="customer-info">
+                    <div class="info-row">
+                        <span class="info-label">Delivery Address:</span>
+                        <br />{{ order.delivery_address }}
+                    </div>
+                    {% if order.notes %}
+                    <div class="info-row">
+                        <span class="info-label">Special Instructions:</span>
+                        <br />{{ order.notes }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🍽️ Order Items</h3>
+                <div class="order-items">
+                    {% for item in order_items %}
+                    <div class="item">
+                        <div>
+                            <div class="item-name">{{ item.product.name }}</div>
+                            <div class="item-details">
+                                Quantity: {{ item.quantity }} × RM {{ item.price
+                                }}
+                            </div>
+                        </div>
+                        <div class="item-price">RM {{ item.total_price }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="total-section">
+                    <div>Total Items: {{ order.total_items }}</div>
+                    <div class="total-amount">
+                        Total: RM {{ order.total_amount }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>⏰ What's Next?</h3>
+                <ul>
+                    <li>
+                        <strong>Order Confirmation:</strong> Your order has been
+                        received and is being reviewed.
+                    </li>
+                    <li>
+                        <strong>Preparation:</strong> Once confirmed, our
+                        kitchen team will start preparing your meal.
+                    </li>
+                    <li>
+                        <strong>Ready for Pickup/Delivery:</strong> We'll notify
+                        you when your order is ready.
+                    </li>
+                    <li>
+                        <strong>Delivery:</strong> Your delicious meal will be
+                        on its way!
+                    </li>
+                </ul>
+            </div>
+
+            <div class="contact-info">
+                <h3>📞 Need Help?</h3>
+                <p>
+                    If you have any questions about your order, please don't
+                    hesitate to contact us:
+                </p>
+                <ul>
+                    <li><strong>Phone:</strong> +60 3-1234 5678</li>
+                    <li><strong>Email:</strong> orders@kampungcuisine.com</li>
+                    <li><strong>WhatsApp:</strong> +60 12-345 6789</li>
+                </ul>
+                <p>
+                    You can also track your order status by logging into your
+                    account on our website.
+                </p>
+            </div>
+
+            <div class="footer">
+                <p>Thank you for choosing Kampung Cuisine!</p>
+                <p>
+                    We appreciate your business and look forward to serving you
+                    again soon.
+                </p>
+                <p style="margin-top: 20px; font-size: 12px; color: #999">
+                    This is an automated email confirmation. Please do not reply
+                    to this email.
+                    <br />© {{ "now"|date:"Y" }} Kampung Cuisine. All rights
+                    reserved.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

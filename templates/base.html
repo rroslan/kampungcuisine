@@ -219,6 +219,55 @@
                     </div>
                 </div>
 
+                <!-- User Authentication Links -->
+                {% if user.is_authenticated %}
+                <div class="dropdown dropdown-end">
+                    <label tabindex="0" class="btn btn-ghost btn-circle">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                            />
+                        </svg>
+                    </label>
+                    <ul
+                        tabindex="0"
+                        class="dropdown-content z-[9999] menu p-2 shadow bg-base-100 rounded-box w-52"
+                    >
+                        <li>
+                            <a href="{% url 'accounts:profile' %}">Profile</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'orders:order_list' %}"
+                                >My Orders</a
+                            >
+                        </li>
+                        <li>
+                            <a href="{% url 'accounts:logout' %}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                {% else %}
+                <a
+                    href="{% url 'accounts:login' %}"
+                    class="btn btn-ghost btn-sm mr-2"
+                    >Login</a
+                >
+                <a
+                    href="{% url 'accounts:register' %}"
+                    class="btn btn-primary btn-sm mr-2"
+                    >Sign Up</a
+                >
+                {% endif %}
+
                 <!-- Admin-Style Theme Selector -->
                 <button
                     @click="cycleTheme()"
