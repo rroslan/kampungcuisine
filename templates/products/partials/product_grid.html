@@ -1,185 +1,132 @@
-<div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8"
->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
     {% for product in products %}
-    <div
-        class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300"
-    >
-        <figure class="px-4 pt-4">
-            {% if product.image_main %}
-            <img
-                src="{{ product.image_main.url }}"
-                alt="{{ product.name }}"
-                class="rounded-xl h-64 w-full object-cover"
-                loading="lazy"
-            />
-            {% else %}
-            <div
-                class="rounded-xl h-64 w-full bg-base-200 flex items-center justify-center"
-            >
-                <svg
-                    class="w-20 h-20 text-base-content opacity-20"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    ></path>
-                </svg>
-            </div>
-            {% endif %}
-        </figure>
-        <div class="card-body">
-            <h2 class="card-title text-base">{{ product.name }}</h2>
-            {% if product.category %}
-            <div class="badge badge-secondary badge-sm">
-                {{ product.category.name }}
-            </div>
-            {% endif %}
-            <p class="text-sm text-base-content/70">SKU: {{ product.sku }}</p>
-            <div class="card-actions justify-between items-center mt-4">
-                <div class="text-2xl font-bold text-primary">
-                    ${{ product.price }}
-                </div>
-                <div class="flex space-x-2">
-                    {% if product.is_published %}
-                    <form
-                        hx-post="{% url 'cart:add_to_cart' product_id=product.id %}"
-                        hx-target="#cart-response-{{ product.id }}"
-                        hx-swap="innerHTML"
-                    >
-                        {% csrf_token %}
-                        <input type="hidden" name="quantity" value="1" />
-                        <button
-                            type="submit"
-                            class="btn btn-primary btn-sm"
-                            title="Add to Cart"
-                        >
-                            <svg
-                                class="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17"
-                                />
+        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
+            <figure class="px-4 pt-4">
+                {% if product.image_main %}
+                    <img src="{{ product.image_main.url }}"
+                         alt="{{ product.name }}"
+                         class="rounded-xl h-64 w-full object-cover"
+                         loading="lazy" />
+                {% else %}
+                    <div class="rounded-xl h-64 w-full bg-base-200 flex items-center justify-center">
+                        <svg class="w-20 h-20 text-base-content opacity-20"
+                             fill="none"
+                             stroke="currentColor"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                {% endif %}
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title text-base">{{ product.name }}</h2>
+                {% if product.category %}<div class="badge badge-secondary badge-sm">{{ product.category.name }}</div>{% endif %}
+                <p class="text-sm text-base-content/70">SKU: {{ product.sku }}</p>
+                <div class="card-actions justify-between items-center mt-4">
+                    <div class="text-2xl font-bold text-primary">${{ product.price }}</div>
+                    <div class="flex space-x-2">
+                        {% if product.is_published %}
+                            <form hx-post="{% url 'cart:add_to_cart' product_id=product.id %}"
+                                  hx-target="#cart-response-{{ product.id }}"
+                                  hx-swap="innerHTML">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1" />
+                                <button type="submit" class="btn btn-primary btn-sm" title="Add to Cart">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17" />
+                                    </svg>
+                                </button>
+                            </form>
+                        {% endif %}
+                        <button class="btn btn-outline btn-sm"
+                                hx-get="{% url 'products:product_detail' product.slug %}"
+                                hx-target="#modal-content"
+                                hx-swap="innerHTML"
+                                hx-trigger="click"
+                                onclick="product_modal.showModal()">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                </path>
                             </svg>
                         </button>
-                    </form>
+                    </div>
+                </div>
+                <!-- Cart Response Container -->
+                <div id="cart-response-{{ product.id }}" class="mt-2"></div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-span-full text-center py-12">
+            <div class="alert alert-info max-w-md mx-auto">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     class="stroke-current shrink-0 w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                    </path>
+                </svg>
+                <div>
+                    <h3 class="font-bold">No products found</h3>
+                    {% if query or current_category %}
+                        <div class="text-xs">Try adjusting your search or filters</div>
+                        <a href="{% url 'products:product_list' %}"
+                           class="btn btn-sm btn-ghost mt-2">View all products</a>
                     {% endif %}
-                    <button
-                        class="btn btn-outline btn-sm"
-                        hx-get="{% url 'products:product_detail' product.slug %}"
-                        hx-target="#modal-content"
-                        hx-swap="innerHTML"
-                        hx-trigger="click"
-                        onclick="product_modal.showModal()"
-                    >
-                        <svg
-                            class="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                            ></path>
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                            ></path>
-                        </svg>
-                    </button>
                 </div>
             </div>
-            <!-- Cart Response Container -->
-            <div id="cart-response-{{ product.id }}" class="mt-2"></div>
         </div>
-    </div>
-    {% empty %}
-    <div class="col-span-full text-center py-12">
-        <div class="alert alert-info max-w-md mx-auto">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                class="stroke-current shrink-0 w-6 h-6"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                ></path>
-            </svg>
-            <div>
-                <h3 class="font-bold">No products found</h3>
-                {% if query or current_category %}
-                <div class="text-xs">Try adjusting your search or filters</div>
-                <a
-                    href="{% url 'products:product_list' %}"
-                    class="btn btn-sm btn-ghost mt-2"
-                    >View all products</a
-                >
-                {% endif %}
-            </div>
-        </div>
-    </div>
     {% endfor %}
 </div>
 
 <!-- Pagination with DaisyUI -->
 {% if page_obj.has_other_pages %}
-<div class="flex justify-center">
-    <div class="btn-group">
-        {% if page_obj.has_previous %}
-        <a
-            href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
-            class="btn"
-            hx-get="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
-            hx-target="#products-grid"
-            hx-swap="innerHTML"
-            hx-indicator="#loading-indicator"
-            >«</a
-        >
-        {% endif %} {% for num in page_obj.paginator.page_range %} {% if
-        page_obj.number == num %}
-        <button class="btn btn-primary">{{ num }}</button>
-        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'
-        %}
-        <a
-            href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
-            class="btn"
-            hx-get="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
-            hx-target="#products-grid"
-            hx-swap="innerHTML"
-            hx-indicator="#loading-indicator"
-            >{{ num }}</a
-        >
-        {% endif %} {% endfor %} {% if page_obj.has_next %}
-        <a
-            href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
-            class="btn"
-            hx-get="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
-            hx-target="#products-grid"
-            hx-swap="innerHTML"
-            hx-indicator="#loading-indicator"
-            >»</a
-        >
-        {% endif %}
+    <div class="flex justify-center">
+        <div class="btn-group">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
+                   class="btn"
+                   hx-get="?page={{ page_obj.previous_page_number }}
+                           {% if query %}&q={{ query }}{% endif %}
+                           {% if current_category %}&category={{ current_category }}{% endif %}
+                           {% if sort %}&sort={{ sort }}{% endif %}"
+                   hx-target="#products-grid"
+                   hx-swap="innerHTML"
+                   hx-indicator="#loading-indicator">«</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+
+                {% if
+                    page_obj.number == num %}
+                    <button class="btn btn-primary">{{ num }}</button>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'
+                    %}
+                    <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
+                       class="btn"
+                       hx-get="?page={{ num }}
+                               {% if query %}&q={{ query }}{% endif %}
+                               {% if current_category %}&category={{ current_category }}{% endif %}
+                               {% if sort %}&sort={{ sort }}{% endif %}"
+                       hx-target="#products-grid"
+                       hx-swap="innerHTML"
+                       hx-indicator="#loading-indicator">{{ num }}</a>
+                {% endif %}
+
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}"
+                   class="btn"
+                   hx-get="?page={{ page_obj.next_page_number }}
+                           {% if query %}&q={{ query }}{% endif %}
+                           {% if current_category %}&category={{ current_category }}{% endif %}
+                           {% if sort %}&sort={{ sort }}{% endif %}"
+                   hx-target="#products-grid"
+                   hx-swap="innerHTML"
+                   hx-indicator="#loading-indicator">»</a>
+            {% endif %}
+        </div>
     </div>
-</div>
 {% endif %}

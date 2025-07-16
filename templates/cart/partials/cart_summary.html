@@ -1,149 +1,103 @@
 {% load static %}
 
 <!-- Cart summary container with dark theme -->
-<div
-    class="bg-base-100 rounded-lg shadow-sm border border-base-300 sticky top-4"
->
+<div class="bg-base-100 rounded-lg shadow-sm border border-base-300 sticky top-4">
     <div class="p-6">
         <h2 class="text-xl font-semibold mb-4 text-base-content">Your Order</h2>
 
         <!-- Check if cart has items -->
         {% if cart and not cart.is_empty %}
-        <!-- Cart Summary Details -->
-        <div class="space-y-3 mb-6">
-            <div class="flex justify-between text-sm">
-                <span class="text-base-content/70"
-                    >{{ cart.total_items }} item{{ cart.total_items|pluralize
-                    }}</span
-                >
-                <span class="text-base-content">${{ cart.total_price }}</span>
-            </div>
-
-            <div class="flex justify-between text-sm">
-                <span class="text-base-content/70">Delivery</span>
-                <span class="text-green-600 font-medium">Free!</span>
-            </div>
-
-            <div class="flex justify-between text-sm">
-                <span class="text-base-content/70">Tax</span>
-                <span class="text-base-content">Included</span>
-            </div>
-
-            <hr class="border-base-300" />
-
-            <div class="flex justify-between text-lg font-semibold">
-                <span class="text-base-content">Total</span>
-                <span class="text-primary">${{ cart.total_price }}</span>
-            </div>
-        </div>
-
-        <!-- Checkout Button -->
-        <div class="space-y-3">
-            <a
-                href="{% url 'orders:checkout' %}"
-                class="btn btn-primary btn-block btn-lg"
-            >
-                <svg
-                    class="w-5 h-5 mr-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                    ></path>
-                </svg>
-                Complete Your Order
-            </a>
-
-            <p class="text-xs text-base-content/60 text-center">
-                🔒 Safe & secure checkout
-            </p>
-        </div>
-
-        <!-- Additional Info -->
-        <div class="mt-6 pt-6 border-t border-base-300">
-            <div class="space-y-3 text-sm text-base-content/70">
-                <div class="flex items-center">
-                    <svg
-                        class="w-4 h-4 mr-2 text-green-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M5 13l4 4L19 7"
-                        ></path>
-                    </svg>
-                    Free delivery on all orders
+            <!-- Cart Summary Details -->
+            <div class="space-y-3 mb-6">
+                <div class="flex justify-between text-sm">
+                    <span class="text-base-content/70">{{ cart.total_items }} item{{ cart.total_items|pluralize }}</span>
+                    <span class="text-base-content">${{ cart.total_price }}</span>
                 </div>
-                <div class="flex items-center">
-                    <svg
-                        class="w-4 h-4 mr-2 text-green-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                    </svg>
-                    100% satisfaction guarantee
+
+                <div class="flex justify-between text-sm">
+                    <span class="text-base-content/70">Delivery</span>
+                    <span class="text-green-600 font-medium">Free!</span>
                 </div>
-                <div class="flex items-center">
-                    <svg
-                        class="w-4 h-4 mr-2 text-green-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                        ></path>
-                    </svg>
-                    Your payment is protected
+
+                <div class="flex justify-between text-sm">
+                    <span class="text-base-content/70">Tax</span>
+                    <span class="text-base-content">Included</span>
+                </div>
+
+                <hr class="border-base-300" />
+
+                <div class="flex justify-between text-lg font-semibold">
+                    <span class="text-base-content">Total</span>
+                    <span class="text-primary">${{ cart.total_price }}</span>
                 </div>
             </div>
-        </div>
+
+            <!-- Checkout Button -->
+            <div class="space-y-3">
+                <a href="{% url 'orders:checkout' %}"
+                   class="btn btn-primary btn-block btn-lg">
+                    <svg class="w-5 h-5 mr-2"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z">
+                        </path>
+                    </svg>
+                    Complete Your Order
+                </a>
+
+                <p class="text-xs text-base-content/60 text-center">🔒 Safe & secure checkout</p>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="mt-6 pt-6 border-t border-base-300">
+                <div class="space-y-3 text-sm text-base-content/70">
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-green-500"
+                             fill="none"
+                             stroke="currentColor"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Free delivery on all orders
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-green-500"
+                             fill="none"
+                             stroke="currentColor"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                        100% satisfaction guarantee
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-green-500"
+                             fill="none"
+                             stroke="currentColor"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                            </path>
+                        </svg>
+                        Your payment is protected
+                    </div>
+                </div>
+            </div>
 
         {% else %}
-        <!-- Empty Cart Summary -->
-        <div class="text-center py-8">
-            <svg
-                class="w-12 h-12 mx-auto text-base-content/30 mb-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                ></path>
-            </svg>
-            <p class="text-base-content/60 mb-4">
-                Start adding delicious items!
-            </p>
-            <a
-                href="{% url 'products:product_list' %}"
-                class="btn btn-primary btn-sm"
-            >
-                Explore Menu
-            </a>
-        </div>
+            <!-- Empty Cart Summary -->
+            <div class="text-center py-8">
+                <svg class="w-12 h-12 mx-auto text-base-content/30 mb-4"
+                     fill="none"
+                     stroke="currentColor"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z">
+                    </path>
+                </svg>
+                <p class="text-base-content/60 mb-4">Start adding delicious items!</p>
+                <a href="{% url 'products:product_list' %}"
+                   class="btn btn-primary btn-sm">Explore Menu</a>
+            </div>
         {% endif %}
         <!-- End cart conditional -->
     </div>

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
 <!-- Block: Page title -->
@@ -6,53 +7,57 @@
 
 <!-- Block: Main content -->
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-6xl mx-auto">
-        <!-- Header section -->
-        <div class="flex items-center justify-between mb-8">
-            <h1 class="text-3xl font-bold text-base-content">Checkout</h1>
-            <!-- Back to cart button -->
-            <a href="{% url 'cart:cart_detail' %}" class="btn btn-outline btn-primary">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Back to Cart
-            </a>
-        </div>
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header section -->
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-3xl font-bold text-base-content">Checkout</h1>
+                <!-- Back to cart button -->
+                <a href="{% url 'cart:cart_detail' %}"
+                   class="btn btn-outline btn-primary">
+                    <svg class="w-5 h-5 mr-2"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Cart
+                </a>
+            </div>
 
-        <!-- Main grid layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Order Form Section -->
-            <div class="lg:col-span-2">
-                <div class="bg-base-100 rounded-lg shadow-sm border border-base-300">
-                    <div class="p-6">
-                        <h2 class="text-xl font-semibold mb-6 text-base-content">Delivery Information</h2>
+            <!-- Main grid layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Order Form Section -->
+                <div class="lg:col-span-2">
+                    <div class="bg-base-100 rounded-lg shadow-sm border border-base-300">
+                        <div class="p-6">
+                            <h2 class="text-xl font-semibold mb-6 text-base-content">Delivery Information</h2>
 
-                        <!-- Checkout Form -->
-                        <form method="post" class="space-y-6">
-                            <!-- CSRF token -->
-                            {% csrf_token %}
+                            <!-- Checkout Form -->
+                            <form method="post" class="space-y-6">
+                                <!-- CSRF token -->
+                                {% csrf_token %}
 
-                            <!-- Form errors display -->
-                            <!-- Check if form has errors -->
-                            {% if form.errors %}
-                            <div class="alert alert-error">
-                                <svg class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <div></div>
-                                    <h3 class="font-medium">Please correct the following errors:</h3>
-                                    <!-- Loop through form errors -->
-                                    {% for field, errors in form.errors.items %}
-                                        <!-- Loop through individual errors -->
-                                        {% for error in errors %}
-                                            <p>{{ error }}</p>
+                                <!-- Form errors display -->
+                                <!-- Check if form has errors -->
+                                {% if form.errors %}
+                                    <div class="alert alert-error">
+                                        <svg class="stroke-current shrink-0 h-6 w-6"
+                                             fill="none"
+                                             viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <div></div>
+                                        <h3 class="font-medium">Please correct the following errors:</h3>
+                                        <!-- Loop through form errors -->
+                                        {% for field, errors in form.errors.items %}
+                                            <!-- Loop through individual errors -->
+                                            {% for error in errors %}<p>{{ error }}</p>{% endfor %}
+                                            <!-- End individual error loop -->
                                         {% endfor %}
-                                        <!-- End individual error loop -->
-                                    {% endfor %}
-                                    <!-- End field errors loop -->
+                                        <!-- End field errors loop -->
+                                    </div>
                                 </div>
-                            </div>
                             {% endif %}
                             <!-- End form errors conditional -->
 
@@ -60,7 +65,8 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <!-- Customer name field -->
                                 <div>
-                                    <label for="{{ form.customer_name.id_for_label }}" class="block text-sm font-medium text-base-content mb-2">
+                                    <label for="{{ form.customer_name.id_for_label }}"
+                                           class="block text-sm font-medium text-base-content mb-2">
                                         {{ form.customer_name.label }}
                                     </label>
                                     {{ form.customer_name }}
@@ -68,9 +74,7 @@
                                     {% if form.customer_name.errors %}
                                         <div class="text-red-500 text-sm mt-1">
                                             <!-- Loop through customer name errors -->
-                                            {% for error in form.customer_name.errors %}
-                                                <p>{{ error }}</p>
-                                            {% endfor %}
+                                            {% for error in form.customer_name.errors %}<p>{{ error }}</p>{% endfor %}
                                             <!-- End customer name error loop -->
                                         </div>
                                     {% endif %}
@@ -79,7 +83,8 @@
 
                                 <!-- Customer email field -->
                                 <div>
-                                    <label for="{{ form.customer_email.id_for_label }}" class="block text-sm font-medium text-base-content mb-2">
+                                    <label for="{{ form.customer_email.id_for_label }}"
+                                           class="block text-sm font-medium text-base-content mb-2">
                                         {{ form.customer_email.label }}
                                     </label>
                                     {{ form.customer_email }}
@@ -87,9 +92,7 @@
                                     {% if form.customer_email.errors %}
                                         <div class="text-red-500 text-sm mt-1">
                                             <!-- Loop through customer email errors -->
-                                            {% for error in form.customer_email.errors %}
-                                                <p>{{ error }}</p>
-                                            {% endfor %}
+                                            {% for error in form.customer_email.errors %}<p>{{ error }}</p>{% endfor %}
                                             <!-- End customer email error loop -->
                                         </div>
                                     {% endif %}
@@ -99,7 +102,8 @@
 
                             <!-- Customer phone field -->
                             <div>
-                                <label for="{{ form.customer_phone.id_for_label }}" class="block text-sm font-medium text-base-content mb-2">
+                                <label for="{{ form.customer_phone.id_for_label }}"
+                                       class="block text-sm font-medium text-base-content mb-2">
                                     {{ form.customer_phone.label }}
                                 </label>
                                 {{ form.customer_phone }}
@@ -107,9 +111,7 @@
                                 {% if form.customer_phone.errors %}
                                     <div class="text-red-500 text-sm mt-1">
                                         <!-- Loop through customer phone errors -->
-                                        {% for error in form.customer_phone.errors %}
-                                            <p>{{ error }}</p>
-                                        {% endfor %}
+                                        {% for error in form.customer_phone.errors %}<p>{{ error }}</p>{% endfor %}
                                         <!-- End customer phone error loop -->
                                     </div>
                                 {% endif %}
@@ -118,7 +120,8 @@
 
                             <!-- Delivery address field -->
                             <div>
-                                <label for="{{ form.delivery_address.id_for_label }}" class="block text-sm font-medium text-base-content mb-2">
+                                <label for="{{ form.delivery_address.id_for_label }}"
+                                       class="block text-sm font-medium text-base-content mb-2">
                                     {{ form.delivery_address.label }}
                                 </label>
                                 {{ form.delivery_address }}
@@ -126,9 +129,7 @@
                                 {% if form.delivery_address.errors %}
                                     <div class="text-red-500 text-sm mt-1">
                                         <!-- Loop through delivery address errors -->
-                                        {% for error in form.delivery_address.errors %}
-                                            <p>{{ error }}</p>
-                                        {% endfor %}
+                                        {% for error in form.delivery_address.errors %}<p>{{ error }}</p>{% endfor %}
                                         <!-- End delivery address error loop -->
                                     </div>
                                 {% endif %}
@@ -137,7 +138,8 @@
 
                             <!-- Notes field -->
                             <div>
-                                <label for="{{ form.notes.id_for_label }}" class="block text-sm font-medium text-base-content mb-2">
+                                <label for="{{ form.notes.id_for_label }}"
+                                       class="block text-sm font-medium text-base-content mb-2">
                                     {{ form.notes.label }}
                                 </label>
                                 {{ form.notes }}
@@ -145,9 +147,7 @@
                                 {% if form.notes.errors %}
                                     <div class="text-red-500 text-sm mt-1">
                                         <!-- Loop through notes errors -->
-                                        {% for error in form.notes.errors %}
-                                            <p>{{ error }}</p>
-                                        {% endfor %}
+                                        {% for error in form.notes.errors %}<p>{{ error }}</p>{% endfor %}
                                         <!-- End notes error loop -->
                                     </div>
                                 {% endif %}
@@ -157,7 +157,10 @@
                             <!-- Submit button -->
                             <div class="pt-6 border-t border-base-300">
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 mr-2"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     Place Order
@@ -182,11 +185,16 @@
                                     <div class="flex items-center space-x-3">
                                         <!-- Product image check -->
                                         {% if item.product.image %}
-                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-12 h-12 object-cover rounded-lg" />
+                                            <img src="{{ item.product.image.url }}"
+                                                 alt="{{ item.product.name }}"
+                                                 class="w-12 h-12 object-cover rounded-lg" />
                                         {% else %}
-                                        <!-- Fallback for no image -->
+                                            <!-- Fallback for no image -->
                                             <div class="w-12 h-12 bg-base-300 rounded-lg flex items-center justify-center">
-                                                <svg class="w-6 h-6 text-base-content/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg class="w-6 h-6 text-base-content/50"
+                                                     fill="none"
+                                                     stroke="currentColor"
+                                                     viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                 </svg>
                                             </div>
@@ -233,14 +241,15 @@
                         <!-- Security Notice -->
                         <div class="bg-base-200 rounded-lg p-4">
                             <div class="flex items-center">
-                                <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-5 h-5 text-green-500 mr-2"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
                                 <span class="text-sm text-base-content/70">Secure checkout</span>
                             </div>
-                            <p class="text-xs text-base-content/60 mt-2">
-                                Your information is protected and encrypted.
-                            </p>
+                            <p class="text-xs text-base-content/60 mt-2">Your information is protected and encrypted.</p>
                         </div>
                     </div>
                 </div>

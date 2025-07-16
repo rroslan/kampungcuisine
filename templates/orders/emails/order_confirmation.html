@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -14,24 +14,28 @@
                 padding: 20px;
                 background-color: #f4f4f4;
             }
+
             .container {
                 background-color: white;
                 padding: 30px;
                 border-radius: 10px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
+
             .header {
                 text-align: center;
                 margin-bottom: 30px;
                 padding-bottom: 20px;
                 border-bottom: 2px solid #e74c3c;
             }
+
             .logo {
                 font-size: 28px;
                 font-weight: bold;
                 color: #e74c3c;
                 margin-bottom: 10px;
             }
+
             .order-number {
                 background-color: #e74c3c;
                 color: white;
@@ -41,20 +45,24 @@
                 font-weight: bold;
                 margin: 20px 0;
             }
+
             .section {
                 margin-bottom: 25px;
             }
+
             .section h3 {
                 color: #e74c3c;
                 border-bottom: 1px solid #ddd;
                 padding-bottom: 10px;
                 margin-bottom: 15px;
             }
+
             .order-items {
                 background-color: #f9f9f9;
                 padding: 15px;
                 border-radius: 5px;
             }
+
             .item {
                 display: flex;
                 justify-content: space-between;
@@ -62,20 +70,25 @@
                 padding: 10px 0;
                 border-bottom: 1px solid #eee;
             }
+
             .item:last-child {
                 border-bottom: none;
             }
+
             .item-name {
                 font-weight: bold;
             }
+
             .item-details {
                 color: #666;
                 font-size: 14px;
             }
+
             .item-price {
                 font-weight: bold;
                 color: #e74c3c;
             }
+
             .total-section {
                 background-color: #e74c3c;
                 color: white;
@@ -83,23 +96,28 @@
                 border-radius: 5px;
                 text-align: center;
             }
+
             .total-amount {
                 font-size: 24px;
                 font-weight: bold;
             }
+
             .customer-info {
                 background-color: #f9f9f9;
                 padding: 15px;
                 border-radius: 5px;
             }
+
             .info-row {
                 margin-bottom: 10px;
             }
+
             .info-label {
                 font-weight: bold;
                 color: #555;
                 margin-right: 10px;
             }
+
             .status-badge {
                 background-color: #f39c12;
                 color: white;
@@ -109,6 +127,7 @@
                 font-weight: bold;
                 text-transform: uppercase;
             }
+
             .footer {
                 text-align: center;
                 margin-top: 30px;
@@ -117,23 +136,28 @@
                 color: #666;
                 font-size: 14px;
             }
+
             .contact-info {
                 background-color: #ecf0f1;
                 padding: 15px;
                 border-radius: 5px;
                 margin-top: 20px;
             }
+
             @media only screen and (max-width: 600px) {
                 body {
                     padding: 10px;
                 }
+
                 .container {
                     padding: 20px;
                 }
+
                 .item {
                     flex-direction: column;
                     align-items: flex-start;
                 }
+
                 .item-price {
                     margin-top: 5px;
                 }
@@ -166,9 +190,7 @@
                     </div>
                     <div class="info-row">
                         <span class="info-label">Status:</span>
-                        <span class="status-badge"
-                            >{{ order.get_status_display }}</span
-                        >
+                        <span class="status-badge">{{ order.get_status_display }}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-label">Customer:</span>
@@ -190,13 +212,15 @@
                 <div class="customer-info">
                     <div class="info-row">
                         <span class="info-label">Delivery Address:</span>
-                        <br />{{ order.delivery_address }}
+                        <br />
+                        {{ order.delivery_address }}
                     </div>
                     {% if order.notes %}
-                    <div class="info-row">
-                        <span class="info-label">Special Instructions:</span>
-                        <br />{{ order.notes }}
-                    </div>
+                        <div class="info-row">
+                            <span class="info-label">Special Instructions:</span>
+                            <br />
+                            {{ order.notes }}
+                        </div>
                     {% endif %}
                 </div>
             </div>
@@ -205,16 +229,16 @@
                 <h3>🍽️ Order Items</h3>
                 <div class="order-items">
                     {% for item in order_items %}
-                    <div class="item">
-                        <div>
-                            <div class="item-name">{{ item.product.name }}</div>
-                            <div class="item-details">
-                                Quantity: {{ item.quantity }} × RM {{ item.price
-                                }}
+                        <div class="item">
+                            <div>
+                                <div class="item-name">{{ item.product.name }}</div>
+                                <div class="item-details">
+                                    Quantity: {{ item.quantity }} × RM {{ item.price
+                                    }}
+                                </div>
                             </div>
+                            <div class="item-price">RM {{ item.total_price }}</div>
                         </div>
-                        <div class="item-price">RM {{ item.total_price }}</div>
-                    </div>
                     {% endfor %}
                 </div>
             </div>
@@ -222,9 +246,7 @@
             <div class="section">
                 <div class="total-section">
                     <div>Total Items: {{ order.total_items }}</div>
-                    <div class="total-amount">
-                        Total: RM {{ order.total_amount }}
-                    </div>
+                    <div class="total-amount">Total: RM {{ order.total_amount }}</div>
                 </div>
             </div>
 
@@ -257,9 +279,15 @@
                     hesitate to contact us:
                 </p>
                 <ul>
-                    <li><strong>Phone:</strong> +60 3-1234 5678</li>
-                    <li><strong>Email:</strong> orders@kampungcuisine.com</li>
-                    <li><strong>WhatsApp:</strong> +60 12-345 6789</li>
+                    <li>
+                        <strong>Phone:</strong> +60 3-1234 5678
+                    </li>
+                    <li>
+                        <strong>Email:</strong> orders@kampungcuisine.com
+                    </li>
+                    <li>
+                        <strong>WhatsApp:</strong> +60 12-345 6789
+                    </li>
                 </ul>
                 <p>
                     You can also track your order status by logging into your
@@ -276,7 +304,8 @@
                 <p style="margin-top: 20px; font-size: 12px; color: #999">
                     This is an automated email confirmation. Please do not reply
                     to this email.
-                    <br />© {{ "now"|date:"Y" }} Kampung Cuisine. All rights
+                    <br />
+                    © {{ "now"|date:"Y" }} Kampung Cuisine. All rights
                     reserved.
                 </p>
             </div>

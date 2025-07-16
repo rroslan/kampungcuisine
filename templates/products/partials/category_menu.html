@@ -1,14 +1,12 @@
 {% for category in categories %}
-<li>
-    <a
-        href="?category={{ category.slug }}"
-        hx-get="{% url 'products:product_list' %}?category={{ category.slug }}"
-        hx-target="#products-grid"
-        hx-swap="innerHTML"
-        hx-indicator="#loading-indicator"
-    >
-        {{ category.name }}
-        <span class="badge badge-sm">{{ category.products.count }}</span>
-    </a>
-</li>
+    <li>
+        <a href="?category={{ category.slug }}"
+           hx-get="{% url 'products:product_list' %}?category={{ category.slug }}"
+           hx-target="#products-grid"
+           hx-swap="innerHTML"
+           hx-indicator="#loading-indicator">
+            {{ category.name }}
+            <span class="badge badge-sm">{{ category.products.count }}</span>
+        </a>
+    </li>
 {% endfor %}

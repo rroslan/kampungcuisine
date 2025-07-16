@@ -1,194 +1,136 @@
-{% extends 'base.html' %} {% load static %} {% block title %}Login - {{
-block.super }}{% endblock %} {% block content %}
-<div
-    class="min-h-screen flex items-center justify-center bg-base-200 py-12 px-4 sm:px-6 lg:px-8"
->
-    <div class="max-w-md w-full space-y-8 bg-base-100 p-8 rounded-lg shadow-xl">
-        <div>
-            <div
-                class="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-primary text-white"
-            >
-                <svg
-                    class="h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                </svg>
-            </div>
-            <h2
-                class="mt-6 text-center text-3xl font-extrabold text-base-content"
-            >
-                Sign in to your account
-            </h2>
-            <p class="mt-2 text-center text-sm text-base-content/70">
-                Or
-                <a
-                    href="{% url 'accounts:register' %}"
-                    class="font-medium text-primary hover:text-primary-focus"
-                >
-                    create a new account
-                </a>
-            </p>
-        </div>
+{% extends 'base.html' %}
 
-        <form class="mt-8 space-y-6" method="post">
-            {% csrf_token %}
+{% load static %}
 
-            <!-- Error handling block -->
-            {% if form.errors %}
-            <div class="alert alert-error">
-                <svg
-                    class="stroke-current shrink-0 h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                </svg>
-                <div>
-                    <!-- Loop through form errors -->
-                    {% for field, errors in form.errors.items %}
-                    <!-- Loop through individual errors -->
-                    {% for error in errors %}
-                    <p>{{ error }}</p>
-                    {% endfor %}
-                    <!-- End error loop -->
-                    {% endfor %}
-                    <!-- End field loop -->
-                </div>
-            </div>
-            {% endif %}
-            <!-- End error handling -->
+{% block title %}
+    Login - {{
+    block.super }}
+{% endblock %}
 
-            <div class="space-y-4">
-                <div>
-                    <label
-                        for="{{ form.username.id_for_label }}"
-                        class="block text-sm font-medium text-base-content"
-                    >
-                        Username
-                    </label>
-                    <div class="mt-1">
-                        {{ form.username }}
-                        <!-- Username error handling -->
-                        {% if form.username.errors %}
-                        <div class="text-red-500 text-sm mt-1">
-                            <!-- Loop through username errors -->
-                            {% for error in form.username.errors %}
-                            <p>{{ error }}</p>
-                            {% endfor %}
-                            <!-- End username error loop -->
-                        </div>
-                        {% endif %}
-                        <!-- End username error handling -->
-                    </div>
-                </div>
-
-                <div>
-                    <label
-                        for="{{ form.password.id_for_label }}"
-                        class="block text-sm font-medium text-base-content"
-                    >
-                        Password
-                    </label>
-                    <div class="mt-1">
-                        {{ form.password }}
-                        <!-- Password error handling -->
-                        {% if form.password.errors %}
-                        <div class="text-red-500 text-sm mt-1">
-                            <!-- Loop through password errors -->
-                            {% for error in form.password.errors %}
-                            <p>{{ error }}</p>
-                            {% endfor %}
-                            <!-- End password error loop -->
-                        </div>
-                        {% endif %}
-                        <!-- End password error handling -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <input
-                        id="remember-me"
-                        name="remember-me"
-                        type="checkbox"
-                        class="checkbox checkbox-primary checkbox-sm"
-                    />
-                    <label
-                        for="remember-me"
-                        class="ml-2 block text-sm text-base-content"
-                    >
-                        Remember me
-                    </label>
-                </div>
-
-                <div class="text-sm">
-                    <a
-                        href="#"
-                        class="font-medium text-primary hover:text-primary-focus"
-                    >
-                        Forgot your password?
-                    </a>
-                </div>
-            </div>
-
+{% block content %}
+    <div class="min-h-screen flex items-center justify-center bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 bg-base-100 p-8 rounded-lg shadow-xl">
             <div>
-                <button type="submit" class="btn btn-primary btn-block">
-                    <svg
-                        class="w-5 h-5 mr-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                        />
+                <div class="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-primary text-white">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
-                    Sign In
-                </button>
-            </div>
-
-            <div class="text-center">
-                <p class="text-sm text-base-content/70">
-                    Don't have an account?
-                    <a
-                        href="{% url 'accounts:register' %}"
-                        class="font-medium text-primary hover:text-primary-focus"
-                    >
-                        Sign up here
-                    </a>
+                </div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-base-content">Sign in to your account</h2>
+                <p class="mt-2 text-center text-sm text-base-content/70">
+                    Or
+                    <a href="{% url 'accounts:register' %}"
+                       class="font-medium text-primary hover:text-primary-focus">create a new account</a>
                 </p>
             </div>
-        </form>
+
+            <form class="mt-8 space-y-6" method="post">
+                {% csrf_token %}
+
+                <!-- Error handling block -->
+                {% if form.errors %}
+                    <div class="alert alert-error">
+                        <svg class="stroke-current shrink-0 h-6 w-6"
+                             fill="none"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div>
+                            <!-- Loop through form errors -->
+                            {% for field, errors in form.errors.items %}
+                                <!-- Loop through individual errors -->
+                                {% for error in errors %}<p>{{ error }}</p>{% endfor %}
+                                <!-- End error loop -->
+                            {% endfor %}
+                            <!-- End field loop -->
+                        </div>
+                    </div>
+                {% endif %}
+                <!-- End error handling -->
+
+                <div class="space-y-4">
+                    <div>
+                        <label for="{{ form.username.id_for_label }}"
+                               class="block text-sm font-medium text-base-content">Username</label>
+                        <div class="mt-1">
+                            {{ form.username }}
+                            <!-- Username error handling -->
+                            {% if form.username.errors %}
+                                <div class="text-red-500 text-sm mt-1">
+                                    <!-- Loop through username errors -->
+                                    {% for error in form.username.errors %}<p>{{ error }}</p>{% endfor %}
+                                    <!-- End username error loop -->
+                                </div>
+                            {% endif %}
+                            <!-- End username error handling -->
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="{{ form.password.id_for_label }}"
+                               class="block text-sm font-medium text-base-content">Password</label>
+                        <div class="mt-1">
+                            {{ form.password }}
+                            <!-- Password error handling -->
+                            {% if form.password.errors %}
+                                <div class="text-red-500 text-sm mt-1">
+                                    <!-- Loop through password errors -->
+                                    {% for error in form.password.errors %}<p>{{ error }}</p>{% endfor %}
+                                    <!-- End password error loop -->
+                                </div>
+                            {% endif %}
+                            <!-- End password error handling -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me"
+                               name="remember-me"
+                               type="checkbox"
+                               class="checkbox checkbox-primary checkbox-sm" />
+                        <label for="remember-me" class="ml-2 block text-sm text-base-content">Remember me</label>
+                    </div>
+
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-primary hover:text-primary-focus">Forgot your password?</a>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <svg class="w-5 h-5 mr-2"
+                             fill="none"
+                             stroke="currentColor"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                        </svg>
+                        Sign In
+                    </button>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-sm text-base-content/70">
+                        Don't have an account?
+                        <a href="{% url 'accounts:register' %}"
+                           class="font-medium text-primary hover:text-primary-focus">Sign up here</a>
+                    </p>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<style>
-    /* Custom styling for form fields */
-    #id_username,
-    #id_password {
-        @apply input input-bordered w-full;
-    }
+    <style>
+        /* Custom styling for form fields */
+        #id_username,
+        #id_password {
+            @apply input input-bordered w-full;
+        }
 
-    #id_username:focus,
-    #id_password:focus {
-        @apply input-primary;
-    }
-</style>
+        #id_username:focus,
+        #id_password:focus {
+            @apply input-primary;
+        }
+    </style>
 {% endblock %}
