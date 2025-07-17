@@ -6,6 +6,7 @@ from django.contrib import messages
 
 from django.contrib.auth.forms import AuthenticationForm
 from .models import UserProfile
+from .forms import CombinedProfileForm
 
 
 def register_view(request):
@@ -75,3 +76,37 @@ def profile_view(request):
     }
 
     return render(request, 'accounts/profile.html', context)
+
+
+@login_required
+def edit_profile_view(request):
+    """Edit user profile view"""
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        combined_form = CombinedProfileForm(
+            user_instance=request.user,
+            profile_instance=profile,
+            data=request.POST
+        )
+
+        if combined_form.is_valid():
+            user, profile = combined_form.save()
+            messages.success(request, 'Your profile has been updated successfully!')
+            return redirect('accounts:profile')
+        else:
+            # If there are errors, they will be displayed in the template
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        combined_form = CombinedProfileForm(
+            user_instance=request.user,
+            profile_instance=profile
+        )
+
+    context = {
+        'user_form': combined_form.user_form,
+        'profile_form': combined_form.profile_form,
+        'profile': profile,
+    }
+
+    return render(request, 'accounts/edit_profile.html', context)

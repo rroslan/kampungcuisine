@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+    Edit Profile -
+    Kampung Cuisine
+{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <div class="flex items-center gap-4 mb-4">
+                    <a href="{% url 'accounts:profile' %}"
+                       class="btn btn-ghost btn-sm">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Back to Profile
+                    </a>
+                </div>
+                <h1 class="text-3xl font-bold text-base-content mb-2">Edit Profile</h1>
+                <p class="text-base-content/70">Update your account information</p>
+            </div>
+
+            <!-- Edit Profile Form -->
+            <div class="bg-base-100 rounded-lg shadow-md p-6">
+                <form method="post" class="space-y-6">
+                    {% csrf_token %}
+
+                    <!-- Personal Information Section -->
+                    <div>
+                        <h2 class="text-xl font-semibold text-base-content mb-4">Personal Information</h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <!-- First Name -->
+                            <div class="form-control">
+                                <label class="label" for="{{ user_form.first_name.id_for_label }}">
+                                    <span class="label-text font-semibold">First Name</span>
+                                </label>
+                                {{ user_form.first_name }}
+                                {% if user_form.first_name.errors %}
+                                    <label class="label">
+                                        <span class="label-text-alt text-error">
+                                            {{ user_form.first_name.errors.0 }}
+                                        </span>
+                                    </label>
+                                {% endif %}
+                            </div>
+
+                            <!-- Last Name -->
+                            <div class="form-control">
+                                <label class="label" for="{{ user_form.last_name.id_for_label }}">
+                                    <span class="label-text font-semibold">Last Name</span>
+                                </label>
+                                {{ user_form.last_name }}
+                                {% if user_form.last_name.errors %}
+                                    <label class="label">
+                                        <span class="label-text-alt text-error">
+                                            {{ user_form.last_name.errors.0 }}
+                                        </span>
+                                    </label>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-control mb-4">
+                            <label class="label" for="{{ user_form.email.id_for_label }}">
+                                <span class="label-text font-semibold">Email Address</span>
+                            </label>
+                            {{ user_form.email }}
+                            {% if user_form.email.errors %}
+                                <label class="label">
+                                    <span class="label-text-alt text-error">
+                                        {{ user_form.email.errors.0 }}
+                                    </span>
+                                </label>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <!-- Contact Information Section -->
+                    <div>
+                        <h2 class="text-xl font-semibold text-base-content mb-4">Contact Information</h2>
+
+                        <!-- Phone -->
+                        <div class="form-control mb-4">
+                            <label class="label" for="{{ profile_form.phone.id_for_label }}">
+                                <span class="label-text font-semibold">Phone Number</span>
+                                <span class="label-text-alt text-base-content/60">(Optional)</span>
+                            </label>
+                            {{ profile_form.phone }}
+                            {% if profile_form.phone.errors %}
+                                <label class="label">
+                                    <span class="label-text-alt text-error">
+                                        {{ profile_form.phone.errors.0 }}
+                                    </span>
+                                </label>
+                            {% else %}
+                                <label class="label">
+                                    <span class="label-text-alt text-base-content/70">
+                                        {{ profile_form.phone.help_text }}
+                                    </span>
+                                </label>
+                            {% endif %}
+                        </div>
+
+                        <!-- Address -->
+                        <div class="form-control">
+                            <label class="label" for="{{ profile_form.address.id_for_label }}">
+                                <span class="label-text font-semibold">Address</span>
+                                <span class="label-text-alt text-base-content/60">(Optional)</span>
+                            </label>
+                            {{ profile_form.address }}
+                            {% if profile_form.address.errors %}
+                                <label class="label">
+                                    <span class="label-text-alt text-error">
+                                        {{ profile_form.address.errors.0 }}
+                                    </span>
+                                </label>
+                            {% else %}
+                                <label class="label">
+                                    <span class="label-text-alt text-base-content/70">
+                                        {{ profile_form.address.help_text }}
+                                    </span>
+                                </label>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-base-300">
+                        <button type="submit" class="btn btn-primary flex-1">
+                            <i class="fas fa-save mr-2"></i>
+                            Save Changes
+                        </button>
+                        <a href="{% url 'accounts:profile' %}"
+                           class="btn btn-outline flex-1">
+                            <i class="fas fa-times mr-2"></i>
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Information Card -->
+            <div class="mt-6 bg-info/10 border border-info/20 rounded-lg p-4">
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-info-circle text-info mt-0.5"></i>
+                    <div>
+                        <h3 class="font-semibold text-base-content mb-1">Profile Information</h3>
+                        <ul class="text-sm text-base-content/70 space-y-1">
+                            <li>• Your phone number will be used for order updates and delivery coordination</li>
+                            <li>• Address information helps us provide better delivery estimates</li>
+                            <li>• Email address is required for account notifications and order confirmations</li>
+                            <li>• All personal information is kept secure and private</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
